@@ -1,0 +1,92 @@
+<ion-content [fullscreen]="true" class="login-content">
+  <div class="login-container">
+    <div class="logo-section">
+      <ion-icon name="log-in-outline" class="login-icon"></ion-icon>
+      <h1>Bem-vindo</h1>
+      <p class="subtitle">Sistema Mobile</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
+      <ion-item class="input-item">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input 
+          type="email" 
+          formControlName="email"
+          placeholder="seu@email.com"
+          clearInput>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="isFieldInvalid('email')">
+        <small class="error-message">Email inválido</small>
+      </ion-text>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input 
+          [type]="showPassword ? 'text' : 'password'" 
+          formControlName="password"
+          placeholder="••••••••"
+          clearInput>
+        </ion-input>
+        <ion-button 
+          fill="clear" 
+          slot="end"
+          (click)="togglePasswordVisibility()">
+          <ion-icon 
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-text color="danger" *ngIf="isFieldInvalid('password')">
+        <small class="error-message">Senha deve ter no mínimo 6 caracteres</small>
+      </ion-text>
+
+      <div class="remember-section">
+        <ion-checkbox 
+          formControlName="rememberMe"
+          labelPlacement="end">
+          <span>Lembrar-me</span>
+        </ion-checkbox>
+      </div>
+
+      <ion-button 
+        expand="block" 
+        type="submit"
+        [disabled]="!loginForm.valid || isLoading"
+        class="login-button">
+        <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
+      </ion-button>
+
+      <div class="divider">
+        <span>ou</span>
+      </div>
+
+      <ion-button 
+        expand="block" 
+        fill="outline"
+        class="social-button">
+        <ion-icon name="logo-google" slot="start"></ion-icon>
+        Google
+      </ion-button>
+    </form>
+
+    <div class="footer-section">
+      <p>Não tem conta? 
+        <ion-button 
+          fill="clear" 
+          class="signup-link"
+          (click)="onSignup()">
+          Cadastre-se
+        </ion-button>
+      </p>
+      <ion-button 
+        fill="clear" 
+        size="small"
+        class="forgot-link"
+        (click)="onForgotPassword()">
+        Esqueceu a senha?
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
